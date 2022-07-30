@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>muju</title>
+
+  <!-- HTML -->
+
+
+  <!-- Custom Styles -->
+  <style>
+    body {
+      background-image: linear-gradient(#334d50, #cbcaa5);
+
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+    }
+
+    .board {
+      display: flex;
+      flex-wrap: wrap;
+      width: 300px;
+      height: 300px;
+      border: 2px solid black;
+      border-radius: 4px;
+      margin-top: 60px;
+    }
+
+    .tile {
+      width: 98px;
+      height: 98px;
+      border: 1px solid black;
+      border-radius: 3px;
+      text-align: center;
+      margin: center;
+      font-weight: bold;
+      background-color: #F3FFEF;
+
+
+    }
+
+    body .tile {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="board">
+
+    <div class="tile">1</div>
+    <div class="tile">2</div>
+    <div class="tile">3</div>
+    <div class="tile">4</div>
+    <div class="tile">5</div>
+    <div class="tile">6</div>
+    <div class="tile">7</div>
+    <div class="tile">8</div>
+    <div class="tile"></div>
+
+
+
+
+
+
+  </div>
+
+
+  <!-- Project -->
+  <script>
+    let Gametile = document.querySelectorAll('.tile');
+    let gameBoard = document.querySelector('.board');
+    let GameState = [
+  [Gametile[0],
+  Gametile[1],
+  Gametile[2]],
+  [Gametile[3],
+  Gametile[4],
+  Gametile[5]],
+  [Gametile[6],
+  Gametile[7],
+  Gametile[8]]
+
+  ]
+
+    function render(gameBoard, GameState) {
+      GameState.forEach((row) => {
+        row.forEach((column) => {
+          gameBoard.appendChild(column);
+        })
+      })
+    }
+    gameBoard.addEventListener('touchstart', (e) => {
+      let tar = e.target;
+
+      let x, y;
+
+      // forEcahloop
+      GameState.forEach((row, rowIndex) => {
+        row.forEach((column, columnIndex) => {
+          if (column == tar) {
+            x = rowIndex;
+            y = columnIndex
+          }
+        });
+      });
+
+      let eX, eY;
+
+      GameState.forEach((row, rowIndex) => {
+        row.forEach((column, columnIndex) => {
+          if (column.innerText == "") {
+            eX = rowIndex;
+            eY = columnIndex
+
+          }
+
+        })
+      })
+      //condition for Muvement
+      if (y == eY && (x + 1 == eX || x - 1 == eX) || x == eX && (y + 1 == eY || y - 1 == eY))
+      {
+
+        let temp = GameState[x][y];
+        GameState[x][y] = GameState[eX][eY]
+        GameState[eX][eY] = temp;
+        console.log(GameState)
+        render(gameBoard, GameState)
+
+      }
+
+
+
+
+    });
+  </script>
+</body>
+
+</html>
